@@ -1,1 +1,5 @@
 .env
+.swp
+__pycache__/
+data.json
+/data
