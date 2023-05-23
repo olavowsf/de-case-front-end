@@ -1,13 +1,21 @@
-from fastapi import FastAPI
-from database import transform, insert_row
+from fastapi import FastAPI, Body, Form, Depends
+from src.database import transform,insert_row
+from pydantic import BaseModel
+
 
 app = FastAPI()
 
+class Item(BaseModel):
+    time_stamp: str
+    data: list
 
-@app.post("/response")
-async def create_item(item: dict):
-    raw_response = item
-    response = transform(raw_response)
+
+
+@app.post("/response/")
+async def create_item(item: Item):
+
+    item_dict = item.dict()
+    response = transform(item_dict)
     job = insert_row(response)
 
     if job == None:
@@ -15,5 +23,4 @@ async def create_item(item: dict):
     else:
         result = "Encountered errors while inserting rows: {}".format(job)
 
-    return result 
-
+    return result
