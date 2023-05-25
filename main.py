@@ -16,11 +16,11 @@ async def create_item(item: Item):
 
     item_dict = item.dict()
     response = transform(item_dict)
-    job = insert_row(response)
+    job_result = insert_row("my_dataset", "my_table", response)
 
-    if job == None:
+    if job_result == []:
         result = f"The following row: {response} has been added."
     else:
-        result = "Encountered errors while inserting rows: {}".format(job)
+        result = job_result
 
     return result
