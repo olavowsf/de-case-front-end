@@ -41,16 +41,16 @@ Run locally in docker
 Create a repo in Artifact Registry
 ```
     gcloud artifacts repositories create de-case-repo --repository-format=docker \
-    --location=europe-west3
+    --location=us-west2
 ```
 
 Build the image
 ```
-    gcloud builds submit --region=us-west2 --tag europe-west3-docker.pkg.dev/playground-olavo-387508/de-case-repo/image:app   
+    gcloud builds submit --region=us-west2 --tag us-west2-docker.pkg.dev/playground-olavo-387508/de-case-repo/image:app   
 ```
 And deploy the new image:
 ```
-    gcloud beta run deploy demo-app --image europe-west3-docker.pkg.dev/playground-olavo-387508/de-case-repo/image:app --region europe-west3 --allow-unauthenticated
+    gcloud run deploy demo-app --image us-west2-docker.pkg.dev/playground-olavo-387508/de-case-repo/image:app --region us-west2 --allow-unauthenticated
 ```
 ### 2.) API Documentation
 

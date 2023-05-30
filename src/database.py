@@ -12,7 +12,7 @@ def create_dataset(dataset_name: str):
     
     dataset = bigquery.Dataset(dataset_id)
     dataset.location = "US"
-    dataset = client.create_dataset(dataset, timeout=30)
+    dataset_created = client.create_dataset(dataset, timeout=30, exists_ok=True)
     
     return dataset_id
 
@@ -30,7 +30,7 @@ def create_table(dataset_name: str, table_name: str):
     }
 
     table = bigquery.Table(table_id, schema=table_schema)
-    table = client.create_table(table)
+    table = client.create_table(table, exists_ok=True)
 
     return dataset_id, table_id
 

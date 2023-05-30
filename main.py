@@ -1,15 +1,16 @@
-from fastapi import FastAPI, Body, Form, Depends
-from src.database import transform,insert_row
+from fastapi import FastAPI
+from src.database import transform,insert_row, create_dataset, create_table
 from pydantic import BaseModel
 
 
-app = FastAPI()
 
+
+dataset_id, table_id = create_table("my_dataset", "my_table")
+
+app = FastAPI()
 class Item(BaseModel):
     time_stamp: str
     data: list
-
-
 
 @app.post("/response/")
 async def create_item(item: Item):
