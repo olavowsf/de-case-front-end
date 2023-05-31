@@ -17,7 +17,7 @@ steps:
     args: ["build", "-t", "us-west2-docker.pkg.dev/playground-olavo-387508/de-case-repo/image", "."]
 
   # Push the container image to Container Registry
-- name: "gcr.io/cloud-builders/docker"
+  - name: "gcr.io/cloud-builders/docker"
   args: ["push", "us-west2-docker.pkg.dev/playground-olavo-387508/de-case-repo/image"]
   images: ["push", "us-west2-docker.pkg.dev/playground-olavo-387508/de-case-repo/image"]
   
