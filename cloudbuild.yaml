@@ -19,8 +19,7 @@ steps:
   # Push the container image to Container Registry
   - name: "gcr.io/cloud-builders/docker"
     args: ["push", "us-west2-docker.pkg.dev/playground-olavo-387508/de-case-repo/image"]
-  images: ["push", "us-west2-docker.pkg.dev/playground-olavo-387508/de-case-repo/image"]
-  
+      
   # Deploy container image to Cloud Run
   - name: "gcr.io/cloud-builders/gcloud"
     args: [
