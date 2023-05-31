@@ -5,7 +5,7 @@ from pytz import timezone
 from google.oauth2 import service_account
 
 
-key_path = "../playground-olavo-387508-29715e94163b.json"
+key_path = "playground-olavo-387508-29715e94163b.json"
 
 
 def create_dataset(dataset_name: str):

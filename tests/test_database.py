@@ -3,7 +3,7 @@ from src.database import transform, create_table, create_dataset
 from google.cloud import bigquery
 from google.oauth2 import service_account
 
-key_path = "../playground-olavo-387508-29715e94163b.json"
+key_path = "playground-olavo-387508-29715e94163b.json"
 
 def test_transform():
     response = {'time_stamp': '2019-05-01T06:00:00-04:00', 'data': [1, 2, 3, 4, 5]}
