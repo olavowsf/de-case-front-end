@@ -5,7 +5,6 @@ from pydantic import BaseModel
 
 
 
-dataset_id, table_id = create_table("my_dataset", "my_table")
 
 app = FastAPI()
 class Item(BaseModel):

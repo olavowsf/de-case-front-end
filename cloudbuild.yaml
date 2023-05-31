@@ -1,0 +1,34 @@
+steps:
+   # Install dependencies
+  - id: "install dependencies"
+    name: python:3.11
+    entrypoint: pip
+    args: ["install", "-r", "requirements.txt", "--user"]
+
+  # Run unit tests
+  - id: "Run unit tests"
+    name: python
+    entrypoint: python
+    args: [ "-m", "pytest", "tests/" ]
+
+  # Build the container image
+  - id: "Build Docker Image"
+    name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "us-west2-docker.pkg.dev/playground-olavo-387508/de-case-repo/image:app ", "."]
+
+  # Push the container image to Container Registry
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push",  "us-west2-docker.pkg.dev/playground-olavo-387508/de-case-repo/image:app"]
+  
+  # Deploy container image to Cloud Run
+  - name: "gcr.io/cloud-builders/gcloud"
+    args: [
+    "run", 
+    "deploy",
+    "app",
+    "--image",
+    "us-west2-docker.pkg.dev/playground-olavo-387508/de-case-repo/image:app",
+    "--allow-unauthenticated",
+    "--region",
+    "us-west2"
+    ]
