@@ -14,11 +14,12 @@ steps:
   # Build the container image
   - id: "Build Docker Image"
     name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "us-west2-docker.pkg.dev/playground-olavo-387508/de-case-repo/image:app ", "."]
+    args: ["build", "-t", "us-west2-docker.pkg.dev/playground-olavo-387508/de-case-repo/image", "."]
 
   # Push the container image to Container Registry
-  - name: "gcr.io/cloud-builders/docker"
-    args: ["push",  "us-west2-docker.pkg.dev/playground-olavo-387508/de-case-repo/image:app"]
+- name: "gcr.io/cloud-builders/docker"
+  args: ["push", "us-west2-docker.pkg.dev/playground-olavo-387508/de-case-repo/image"]
+  images: ["push", "us-west2-docker.pkg.dev/playground-olavo-387508/de-case-repo/image"]
   
   # Deploy container image to Cloud Run
   - name: "gcr.io/cloud-builders/gcloud"
@@ -27,7 +28,7 @@ steps:
     "deploy",
     "app",
     "--image",
-    "us-west2-docker.pkg.dev/playground-olavo-387508/de-case-repo/image:app",
+    "us-west2-docker.pkg.dev/playground-olavo-387508/de-case-repo/image",
     "--allow-unauthenticated",
     "--region",
     "us-west2"
