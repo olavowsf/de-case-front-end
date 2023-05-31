@@ -1,7 +1,9 @@
 import pytest
 from src.database import transform, create_table, create_dataset
 from google.cloud import bigquery
+from google.oauth2 import service_account
 
+key_path = "../playground-olavo-387508-29715e94163b.json"
 
 def test_transform():
     response = {'time_stamp': '2019-05-01T06:00:00-04:00', 'data': [1, 2, 3, 4, 5]}
@@ -20,7 +22,10 @@ def test_table():
     yield table_id
 
     # Teardown: Delete the test table
-    client = bigquery.Client()
+    credentials = service_account.Credentials.from_service_account_file(
+    key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"])
+
+    client = bigquery.Client(credentials=credentials, project=credentials.project_id)
 
     table_ref = client.get_table(table_id)
     dataset_ref = client.get_dataset(dataset_id)
@@ -30,7 +35,11 @@ def test_table():
 
 def test_create_table(test_table):
     # Test: Check if the table exists
-    client = bigquery.Client()
+    credentials = service_account.Credentials.from_service_account_file(
+    key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"])
+
+    client = bigquery.Client(credentials=credentials, project=credentials.project_id)    
+    
     table_ref = client.get_table(test_table)
     assert table_ref.table_id == "test_table"
     assert table_ref.dataset_id == "test_dataset"

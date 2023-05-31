@@ -2,12 +2,17 @@ from google.cloud import bigquery
 from datetime import datetime
 from statistics import mean, stdev
 from pytz import timezone
+from google.oauth2 import service_account
 
 
+key_path = "../playground-olavo-387508-29715e94163b.json"
 
 
 def create_dataset(dataset_name: str):
-    client = bigquery.Client()
+    credentials = service_account.Credentials.from_service_account_file(
+    key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"])
+
+    client = bigquery.Client(credentials=credentials, project=credentials.project_id)
     dataset_id = "{}.{}".format(client.project,dataset_name)
     
     dataset = bigquery.Dataset(dataset_id)
@@ -17,7 +22,10 @@ def create_dataset(dataset_name: str):
     return dataset_id
 
 def create_table(dataset_name: str, table_name: str):
-    client = bigquery.Client()
+    credentials = service_account.Credentials.from_service_account_file(
+    key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"])
+
+    client = bigquery.Client(credentials=credentials, project=credentials.project_id)
 
     dataset_id = create_dataset(dataset_name)
 
@@ -49,7 +57,10 @@ def transform(response: dict):
 
 
 def insert_row(dataset_name: str, table_name: str, response: list):
-    client = bigquery.Client()
+    credentials = service_account.Credentials.from_service_account_file(
+    key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"])
+
+    client = bigquery.Client(credentials=credentials, project=credentials.project_id)
     
     table_id = f"{client.project}.{dataset_name}.{table_name}"
 
